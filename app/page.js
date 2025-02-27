@@ -22,7 +22,7 @@ export default function Home() {
                 <h1 className="text-5xl font-bold">Hi, I'm SOK KIMHENG</h1>
                 <p className="text-xl mt-4">A Frontend Developer & Designer</p>
                 </section>
-                <img src="./photo.png" href="" className="img h-[200px] w-[200px] sm:h-[260px] sm:w-[260px] rounded-[50%] hover:shadow-2xl hover:shadow-blue-500"></img>
+                <img src="./photo.png" href="#" className="img h-[200px] w-[200px] sm:h-[260px] sm:w-[260px] rounded-[50%] hover:shadow-2xl hover:shadow-blue-500"></img>
             </div>
         </header>
 
