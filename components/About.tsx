@@ -1,113 +1,112 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { Code2, Check } from "lucide-react";
+import { useReveal } from "./useReveal";
 
-const services = [
-  {
-    title: "Full Stack Development",
-    desc: "End-to-end application development with modern frameworks",
-  },
-  {
-    title: "Cloud Architecture",
-    desc: "AWS infrastructure design and serverless solutions",
-  },
-  {
-    title: "API Development",
-    desc: "RESTful and GraphQL APIs with high performance",
-  },
-  {
-    title: "Database Optimization",
-    desc: "SQL and NoSQL database design and query optimization",
-  },
+const techStack = [
+  "React", "Next.js", "TypeScript", "Node.js", "Python",
+  "AWS Lambda", "DynamoDB", "Docker", "Terraform", "PostgreSQL",
+  "Redis", "GraphQL",
 ];
 
-const tags = ["Problem Solver", "Cloud Native", "Agile Methodology", "DevOps"];
+const stats = [
+  { num: "3+",  label: "Years at AWS" },
+  { num: "20+", label: "Projects Shipped" },
+  { num: "12+", label: "AWS Services" },
+];
 
 export default function About() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -60px 0px" }
-    );
-    const els = sectionRef.current?.querySelectorAll(".reveal");
-    els?.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+  const ref = useReveal();
 
   return (
-    <section id="about" ref={sectionRef} className="py-24 relative">
-      {/* Subtle background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent dark:via-slate-900/40 via-slate-100/40 to-transparent pointer-events-none" />
+    <section
+      id="about"
+      ref={ref}
+      className="relative z-10 px-6 md:px-14 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center"
+    >
+      {/* Left */}
+      <div>
+        <p className="reveal section-tag">About Me</p>
+        <h2 className="reveal reveal-delay-1 font-syne font-extrabold leading-[1.05] mt-5 mb-7 text-slate-800 dark:text-slate-100" style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}>
+          Crafting digital<br />experiences that scale
+        </h2>
+        <p className="reveal reveal-delay-2 text-sm leading-loose text-light-muted dark:text-dark-muted mb-4">
+          As a Full Stack Developer at AWS, I&#39;ve spent the last 3 years
+          designing and implementing enterprise-grade solutions that handle
+          millions of requests daily. My expertise spans from React frontends
+          to Lambda-powered microservices.
+        </p>
+        <p className="reveal reveal-delay-2 text-sm leading-loose text-light-muted dark:text-dark-muted">
+          I&#39;m passionate about creating efficient, scalable systems that solve
+          real business problems  combining deep backend engineering with a
+          passion for intuitive UI.
+        </p>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          {/* Left */}
-          <div className="reveal">
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-[#FF9900]/10 text-[#FF9900] mb-4">
-              About Me
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
-              Building the{" "}
-              <span className="text-[#FF9900]">Future</span> of Cloud
-              Infrastructure
-            </h2>
-            <p className="dark:text-slate-400 text-slate-600 mb-6 leading-relaxed">
-              As a Full Stack Developer at AWS, I&apos;ve spent the last 3 years
-              designing and implementing enterprise-grade solutions that handle
-              millions of requests daily. My expertise spans from React frontends
-              to Lambda-powered microservices.
-            </p>
-            <p className="dark:text-slate-400 text-slate-600 mb-8 leading-relaxed">
-              I&apos;m passionate about creating efficient, scalable systems that
-              solve real business problems. Whether it&apos;s optimizing database
-              queries or architecting serverless workflows, I bring a
-              data-driven approach to every project.
-            </p>
-            <div className="flex flex-wrap gap-2.5">
-              {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-4 py-2 rounded-full dark:bg-slate-800 bg-slate-100 border dark:border-slate-700 border-slate-200 text-sm font-medium hover:border-[#FF9900] hover:text-[#FF9900] transition-colors"
-                >
-                  {tag}
-                </span>
-              ))}
+        {/* Stats */}
+        <div className="reveal reveal-delay-3 mt-12 grid grid-cols-3 border border-light-border dark:border-dark-border">
+          {stats.map((s, i) => (
+            <div
+              key={s.label}
+              className={`relative px-4 py-6 group overflow-hidden ${i < 2 ? "border-r border-light-border dark:border-dark-border" : ""}`}
+            >
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-orange scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+              <div className="font-syne font-extrabold text-3xl text-orange leading-none mb-1">{s.num}</div>
+              <div className="text-[0.62rem] uppercase tracking-widest text-light-muted dark:text-dark-muted">{s.label}</div>
             </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Right  card */}
+      <div className="reveal reveal-delay-2">
+        <div className="relative bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border p-8">
+          {/* Top gradient bar */}
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-orange to-teal" />
+
+          {/* AWS badge */}
+          <div className="inline-flex items-center gap-2 bg-orange/5 border border-orange/25 px-4 py-2 mb-7 text-[0.72rem] tracking-widest text-orange">
+            <span></span> Amazon Web Services  Software Engineer
           </div>
 
-          {/* Right — card */}
-          <div className="relative reveal" style={{ transitionDelay: "150ms" }}>
-            <div className="absolute -inset-4 bg-gradient-to-r from-[#FF9900] to-[#0ea5e9] rounded-3xl opacity-10 blur-2xl" />
-            <div className="relative glass rounded-2xl p-8 border dark:border-slate-700/60 border-slate-200">
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-2.5">
-                <Code2 className="w-5 h-5 text-[#FF9900]" />
-                What I Do
-              </h3>
-              <ul className="space-y-5">
-                {services.map((s) => (
-                  <li key={s.title} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-[#FF9900]/15 flex items-center justify-center mt-0.5 shrink-0">
-                      <Check className="w-3.5 h-3.5 text-[#FF9900]" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-sm">{s.title}</div>
-                      <div className="text-sm dark:text-slate-400 text-slate-500 mt-0.5">
-                        {s.desc}
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Code snippet */}
+          <p className="text-[0.6rem] uppercase tracking-widest text-light-dim dark:text-dark-dim mb-3">
+            Current Stack
+          </p>
+          <div className="bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border px-5 py-4 text-[0.74rem] leading-loose font-mono">
+            <span className="text-teal">const</span>{" "}
+            <span className="text-slate-700 dark:text-slate-300">developer</span> = {"{"}
+            <br />
+            &nbsp;&nbsp;<span className="text-teal">name:</span>{" "}
+            <span className="text-green-500">&quot;Sok Kimheng&quot;</span>,
+            <br />
+            &nbsp;&nbsp;<span className="text-teal">role:</span>{" "}
+            <span className="text-green-500">&quot;Full Stack Dev&quot;</span>,
+            <br />
+            &nbsp;&nbsp;<span className="text-teal">company:</span>{" "}
+            <span className="text-green-500">&quot;AWS&quot;</span>,
+            <br />
+            &nbsp;&nbsp;<span className="text-teal">experience:</span>{" "}
+            <span className="text-orange">3</span>,
+            <br />
+            &nbsp;&nbsp;<span className="text-teal">focus:</span>{" "}
+            [<span className="text-green-500">&quot;cloud&quot;</span>,{" "}
+            <span className="text-green-500">&quot;scale&quot;</span>]
+            <br />
+            {"}"}
+          </div>
+
+          {/* Tech chips */}
+          <p className="text-[0.6rem] uppercase tracking-widest text-light-dim dark:text-dark-dim mt-6 mb-3">
+            Technologies
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {techStack.map((t) => (
+              <span
+                key={t}
+                className="text-[0.65rem] tracking-wider px-3 py-1.5 border border-light-border dark:border-dark-border text-light-muted dark:text-dark-muted hover:border-teal hover:text-teal transition-colors duration-200"
+              >
+                {t}
+              </span>
+            ))}
           </div>
         </div>
       </div>

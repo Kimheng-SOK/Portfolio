@@ -1,130 +1,79 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { ChevronRight } from "lucide-react";
+import { useReveal } from "./useReveal";
 
 const experiences = [
   {
-    period: "2021 – Present",
-    role: "Software Development Engineer",
+    date:    "2022 — Present",
+    role:    "Software Development Engineer",
     company: "Amazon Web Services (AWS)",
-    color: "text-[#FF9900]",
-    dotColor: "bg-[#FF9900]",
-    bullets: [
-      "Architected serverless applications handling 10M+ daily requests using Lambda, API Gateway, and DynamoDB",
-      "Reduced infrastructure costs by 40% through optimized auto-scaling and spot instance strategies",
-      "Led migration of monolithic applications to microservices architecture serving 500K+ users",
-      "Mentored 4 junior engineers; established code review and testing standards across the team",
-    ],
-    align: "right",
+    desc:    "Leading full stack development for internal cloud tooling used by thousands of AWS customers worldwide. Architected microservices on Lambda, built high-throughput APIs, and delivered responsive React dashboards for real-time infrastructure monitoring.",
+    tags:    ["AWS Lambda", "React", "TypeScript", "Node.js", "DynamoDB", "CloudFormation"],
+    active:  true,
   },
   {
-    period: "2020 – 2021",
-    role: "Junior Full Stack Developer",
-    company: "Tech Startup",
-    color: "text-[#0ea5e9]",
-    dotColor: "bg-[#0ea5e9]",
-    bullets: [
-      "Developed full-stack web applications using React, Node.js, and PostgreSQL",
-      "Implemented CI/CD pipelines reducing deployment time by 60%",
-      "Collaborated with cross-functional teams in Agile environment across 3 product releases",
-      "Built reusable component library that cut UI development time by 35%",
-    ],
-    align: "left",
+    date:    "2021 — 2022",
+    role:    "Junior Full Stack Developer",
+    company: "Tech Startup — Phnom Penh",
+    desc:    "Built and shipped two SaaS products from scratch: an e-commerce management platform and a logistics dashboard. Developed REST APIs with Express.js, integrated payment gateways, and deployed Docker + CI/CD pipelines.",
+    tags:    ["Vue.js", "Express.js", "PostgreSQL", "Docker", "Stripe API"],
+    active:  false,
+  },
+  {
+    date:    "2020 — 2021",
+    role:    "Frontend Intern",
+    company: "Digital Agency",
+    desc:    "Developed responsive web interfaces for local businesses. Learned React, accessibility standards, and performance optimization while collaborating with senior developers on production deployments.",
+    tags:    ["React", "CSS3", "Figma", "Git"],
+    active:  false,
   },
 ];
 
 export default function Experience() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => e.isIntersecting && e.target.classList.add("visible")),
-      { threshold: 0.1, rootMargin: "0px 0px -60px 0px" }
-    );
-    sectionRef.current
-      ?.querySelectorAll(".reveal")
-      .forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+  const ref = useReveal();
 
   return (
-    <section
-      id="experience"
-      ref={sectionRef}
-      className="py-24 dark:bg-slate-900/50 bg-slate-100/60"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16 reveal">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-[#FF9900]/10 text-[#FF9900] mb-4">
-            Career
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-3">
-            Professional{" "}
-            <span className="text-[#FF9900]">Experience</span>
+    <section id="experience" ref={ref} className="relative z-10 px-6 md:px-14 py-24">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
+        <div>
+          <p className="reveal section-tag">Career Timeline</p>
+          <h2 className="reveal reveal-delay-1 font-syne font-extrabold text-slate-800 dark:text-slate-100 leading-tight mt-4" style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}>
+            Work Experience
           </h2>
-          <p className="dark:text-slate-400 text-slate-500">
-            My journey in software development
-          </p>
         </div>
+      </div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Center line */}
-          <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#FF9900] via-[#0ea5e9] to-purple-500 opacity-30" />
+      <div className="relative">
+        {/* Vertical line */}
+        <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-orange via-teal to-transparent" />
 
-          {experiences.map((exp, i) => (
+        {experiences.map((exp, i) => (
+          <div key={exp.role} className={`reveal reveal-delay-${i} relative pl-12 pb-14 last:pb-0`}>
+            {/* Dot */}
             <div
-              key={exp.role}
-              className={`relative mb-12 last:mb-0 reveal`}
-              style={{ transitionDelay: `${i * 150}ms` }}
-            >
-              <div className="md:flex items-start gap-8">
-                {/* Left card */}
-                <div
-                  className={`md:w-5/12 mb-4 md:mb-0 ${exp.align === "right" ? "md:text-right" : "order-2"}`}
-                >
-                  <div className="glass rounded-2xl p-6 border dark:border-slate-700/60 border-slate-200 card-hover inline-block w-full text-left">
-                    <span className={`text-sm font-semibold ${exp.color}`}>
-                      {exp.period}
-                    </span>
-                    <h3 className="text-lg font-bold mt-1.5">{exp.role}</h3>
-                    <p className="dark:text-slate-400 text-slate-500 text-sm mt-1">
-                      {exp.company}
-                    </p>
-                  </div>
-                </div>
+              className={`absolute left-[-6px] top-1.5 w-3 h-3 rounded-full border-2 ${
+                exp.active
+                  ? "bg-orange border-orange shadow-[0_0_0_4px_rgba(255,153,0,0.15),0_0_20px_rgba(255,153,0,0.3)]"
+                  : "bg-light-bg dark:bg-dark-bg border-orange/50"
+              }`}
+            />
 
-                {/* Center dot */}
-                <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 mt-6 items-center justify-center">
-                  <div
-                    className={`w-4 h-4 rounded-full ${exp.dotColor} border-4 dark:border-slate-900 border-slate-100 shadow-lg`}
-                  />
-                </div>
-
-                {/* Right card */}
-                <div
-                  className={`md:w-5/12 ${exp.align === "left" ? "order-1" : ""}`}
-                >
-                  <div className="glass rounded-2xl p-6 border dark:border-slate-700/60 border-slate-200">
-                    <ul className="space-y-2.5">
-                      {exp.bullets.map((b, j) => (
-                        <li key={j} className="flex items-start gap-2.5 text-sm dark:text-slate-300 text-slate-600">
-                          <ChevronRight
-                            className={`w-4 h-4 mt-0.5 shrink-0 ${exp.color}`}
-                          />
-                          {b}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
+            <p className="text-[0.65rem] uppercase tracking-[0.15em] text-light-muted dark:text-dark-muted mb-2">{exp.date}</p>
+            <h3 className="font-syne font-bold text-xl text-slate-800 dark:text-slate-100 mb-1">{exp.role}</h3>
+            <p className="flex items-center gap-2 text-orange text-[0.8rem] tracking-widest mb-4">
+              <span className="block w-6 h-px bg-orange" />
+              {exp.company}
+            </p>
+            <p className="text-sm leading-loose text-light-muted dark:text-dark-muted max-w-2xl mb-5">{exp.desc}</p>
+            <div className="flex flex-wrap gap-2">
+              {exp.tags.map((t) => (
+                <span key={t} className="text-[0.63rem] tracking-wider px-3 py-1 bg-orange/5 border border-orange/20 text-orange">
+                  {t}
+                </span>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </section>
   );

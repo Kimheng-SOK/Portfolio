@@ -1,159 +1,323 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
-const phrases = [
-  "Full Stack Developer",
-  "AWS Cloud Engineer",
-  "Problem Solver",
-  "Scalable Systems Architect",
+/* ── Tech badge data ─────────────────────────────────────── */
+type Tech = {
+  name: string;
+  icon: string;
+  color: string;
+  bg: string;
+  delay: string;
+};
+
+const DI = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons";
+
+const ring1: Tech[] = [
+  {
+    name: "React",
+    icon: `${DI}/react/react-original.svg`,
+    color: "#61dafb",
+    bg: "rgba(97,218,251,0.12)",
+    delay: "0s",
+  },
+  {
+    name: "TypeScript",
+    icon: `${DI}/typescript/typescript-original.svg`,
+    color: "#3b82f6",
+    bg: "rgba(59,130,246,0.12)",
+    delay: "-3.75s",
+  },
+  {
+    name: "Python",
+    icon: `${DI}/python/python-original.svg`,
+    color: "#ffd343",
+    bg: "rgba(255,211,67,0.12)",
+    delay: "-7.5s",
+  },
+  {
+    name: "AWS",
+    icon: `${DI}/amazonwebservices/amazonwebservices-plain-wordmark.svg`,
+    color: "#FF9900",
+    bg: "rgba(255,153,0,0.12)",
+    delay: "-11.25s",
+  },
 ];
 
-const stats = [
-  { value: "3+", label: "Years Experience", color: "text-[#FF9900]" },
-  { value: "AWS", label: "Cloud Expert", color: "text-[#0ea5e9]" },
-  { value: "20+", label: "Projects Delivered", color: "text-purple-400" },
-  { value: "99.9%", label: "Uptime Achieved", color: "text-emerald-400" },
+const ring2: Tech[] = [
+  {
+    name: "Next.js",
+    icon: `${DI}/nextjs/nextjs-original.svg`,
+    color: "#94a3b8",
+    bg: "rgba(148,163,184,0.12)",
+    delay: "0s",
+  },
+  {
+    name: "Node.js",
+    icon: `${DI}/nodejs/nodejs-original.svg`,
+    color: "#68a063",
+    bg: "rgba(104,160,99,0.12)",
+    delay: "-5.5s",
+  },
+  {
+    name: "Docker",
+    icon: `${DI}/docker/docker-original.svg`,
+    color: "#2496ed",
+    bg: "rgba(36,150,237,0.12)",
+    delay: "-11s",
+  },
+  {
+    name: "PostgreSQL",
+    icon: `${DI}/postgresql/postgresql-original.svg`,
+    color: "#336791",
+    bg: "rgba(51,103,145,0.12)",
+    delay: "-16.5s",
+  },
 ];
 
+const ring3: Tech[] = [
+  {
+    name: "Git",
+    icon: `${DI}/git/git-original.svg`,
+    color: "#f05032",
+    bg: "rgba(240,80,50,0.12)",
+    delay: "0s",
+  },
+  {
+    name: "MongoDB",
+    icon: `${DI}/mongodb/mongodb-original.svg`,
+    color: "#47a248",
+    bg: "rgba(71,162,72,0.12)",
+    delay: "-7.5s",
+  },
+  {
+    name: "Tailwind",
+    icon: `${DI}/tailwindcss/tailwindcss-original.svg`,
+    color: "#06b6d4",
+    bg: "rgba(6,182,212,0.12)",
+    delay: "-15s",
+  },
+  {
+    name: "GraphQL",
+    icon: `${DI}/graphql/graphql-plain.svg`,
+    color: "#e10098",
+    bg: "rgba(225,0,152,0.12)",
+    delay: "-22.5s",
+  },
+];
+
+/* ── Single orbiting badge ───────────────────────────────── */
+function TechBadge({ icon, color, bg, name }: Tech) {
+  return (
+    <div
+      title={name}
+      className="orbit-badge w-11 h-11 rounded-full flex items-center justify-center
+                 border shadow-lg select-none"
+      style={{ background: bg, borderColor: `${color}55` }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={icon}
+        alt={name}
+        width={26}
+        height={26}
+        className="w-[26px] h-[26px] object-contain"
+      />
+    </div>
+  );
+}
+
+/* ── Hero section ────────────────────────────────────────── */
 export default function Hero() {
-  const [typed, setTyped] = useState("");
-  const [phraseIdx, setPhraseIdx] = useState(0);
-  const [charIdx, setCharIdx] = useState(0);
-  const [deleting, setDeleting] = useState(false);
   const [visible, setVisible] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
-
   useEffect(() => {
-    setVisible(true);
+    setTimeout(() => setVisible(true), 80);
   }, []);
 
-  useEffect(() => {
-    const current = phrases[phraseIdx];
-    const speed = deleting ? 45 : 95;
-
-    timerRef.current = setTimeout(() => {
-      if (!deleting) {
-        setTyped(current.substring(0, charIdx + 1));
-        if (charIdx + 1 === current.length) {
-          setTimeout(() => setDeleting(true), 1800);
-        } else {
-          setCharIdx((c) => c + 1);
-        }
-      } else {
-        setTyped(current.substring(0, charIdx - 1));
-        if (charIdx - 1 === 0) {
-          setDeleting(false);
-          setPhraseIdx((i) => (i + 1) % phrases.length);
-          setCharIdx(0);
-        } else {
-          setCharIdx((c) => c - 1);
-        }
-      }
-    }, speed);
-
-    return () => clearTimeout(timerRef.current);
-  }, [typed, deleting, phraseIdx, charIdx]);
-
-  const handleScroll = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  const fade = (delay: string) =>
+    `transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${delay}`;
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid">
-      {/* Background */}
-      <div className="absolute inset-0 dark:bg-slate-950 bg-slate-50">
-        <div className="absolute inset-0 dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 bg-gradient-to-br from-slate-50 via-orange-50/30 to-blue-50/30 opacity-90" />
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_60%_-20%,rgba(255,153,0,0.12),transparent_60%)]" />
-        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_40%_120%,rgba(14,165,233,0.1),transparent_60%)]" />
-      </div>
-
-      {/* Floating orbs */}
-      <div className="absolute top-24 left-12 w-24 h-24 rounded-full bg-[#FF9900]/15 blur-2xl animate-float" />
-      <div className="absolute bottom-32 right-16 w-36 h-36 rounded-full bg-[#0ea5e9]/15 blur-2xl animate-float-delay" />
-      <div className="absolute top-1/2 right-1/3 w-20 h-20 rounded-full bg-purple-500/15 blur-2xl animate-float-slow" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Badge */}
-        <div
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full glass border dark:border-slate-700/60 border-slate-200 mb-8 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-        >
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-sm font-medium dark:text-slate-300 text-slate-600">
-            Available for new opportunities
-          </span>
-        </div>
-
-        {/* Heading */}
-        <h1
-          className={`text-5xl md:text-7xl font-bold mb-6 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-        >
-          Hi, I&apos;m{" "}
-          <span className="text-gradient">Sok Kimheng</span>
-        </h1>
-
-        {/* Typewriter */}
-        <div
-          className={`text-xl md:text-3xl font-mono dark:text-slate-400 text-slate-500 mb-8 h-10 flex items-center justify-center transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-        >
-          <span className="typing-cursor">{typed}</span>
-        </div>
-
-        {/* Description */}
-        <p
-          className={`max-w-2xl mx-auto text-lg dark:text-slate-400 text-slate-600 mb-12 leading-relaxed transition-all duration-700 delay-300 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-        >
-          Full Stack Developer with{" "}
-          <span className="text-[#FF9900] font-semibold">3 years</span> of
-          experience architecting scalable cloud solutions at{" "}
-          <span className="text-[#FF9900] font-semibold">AWS</span>. Specialized
-          in distributed systems, serverless architectures, and high-performance
-          web applications.
-        </p>
-
-        {/* CTAs */}
-        <div
-          className={`flex flex-col sm:flex-row items-center justify-center gap-4 mb-20 transition-all duration-700 delay-[400ms] ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-        >
-          <button
-            onClick={() => handleScroll("#projects")}
-            className="flex items-center gap-2 px-8 py-4 rounded-full bg-[#FF9900] text-slate-900 font-bold hover:bg-orange-400 transition-all hover:scale-105 shadow-xl shadow-orange-500/30"
+    <section
+      id="hero"
+      className="relative z-10 min-h-screen flex flex-col justify-center px-6 md:px-14 pt-28 pb-20 overflow-hidden"
+    >
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-0">
+        {/* LEFT — text content */}
+        <div className="flex-1 max-w-2xl">
+          <p
+            className={`${fade("delay-100")} mb-7 text-[0.68rem] uppercase tracking-[0.22em] text-orange`}
           >
-            View My Work <ArrowRight className="w-5 h-5" />
-          </button>
-          <button
-            onClick={() => handleScroll("#contact")}
-            className="flex items-center gap-2 px-8 py-4 rounded-full glass border dark:border-slate-700 border-slate-300 dark:hover:border-[#FF9900] hover:border-[#FF9900] dark:text-slate-100 text-slate-700 font-semibold transition-all hover:scale-105 hover:text-[#FF9900]"
-          >
-            Contact Me
-          </button>
-        </div>
+            <span className="opacity-50 mr-2">//</span>
+            Full Stack Developer &amp; Cloud Engineer
+          </p>
 
-        {/* Stats */}
-        <div
-          className={`grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto transition-all duration-700 delay-500 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-        >
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="glass rounded-2xl p-5 card-hover border dark:border-slate-700/50 border-slate-200"
+          <h1
+            className={`${fade("delay-200")} font-syne font-extrabold leading-[0.92] tracking-tight`}
+            style={{ fontSize: "clamp(3.5rem, 10vw, 8.5rem)" }}
+          >
+            <span className="text-slate-800 dark:text-slate-100">SOK</span>
+            <br />
+            <span
+              className="text-transparent"
+              style={
+                { WebkitTextStroke: "1.5px #FF9900" } as React.CSSProperties
+              }
             >
-              <div className={`text-3xl font-bold mb-1 ${stat.color}`}>
-                {stat.value}
-              </div>
-              <div className="text-sm dark:text-slate-400 text-slate-500">
-                {stat.label}
-              </div>
+              KIM
+            </span>
+            <span className="text-slate-800 dark:text-slate-100">HENG</span>
+          </h1>
+
+          <p
+            className={`${fade("delay-300")} mt-8 max-w-lg text-light-muted dark:text-dark-muted leading-relaxed`}
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontStyle: "italic",
+              fontSize: "clamp(1rem, 2.5vw, 1.45rem)",
+            }}
+          >
+            Building scalable systems at{" "}
+            <strong className="text-orange not-italic">AWS</strong> — where
+            backend precision meets fluid front-end craft.
+          </p>
+
+          <div className={`${fade("delay-500")} flex flex-wrap gap-4 mt-12`}>
+            <a
+              href="#projects"
+              className="btn-clip bg-orange text-black font-syne font-bold text-[0.78rem] uppercase
+                         tracking-widest px-8 py-3.5 hover:bg-orange-dim transition-colors duration-200
+                         flex items-center gap-2"
+            >
+              View My Work <span>&#x2197;</span>
+            </a>
+            <a
+              href="#contact"
+              className="border border-light-border dark:border-dark-border text-light-muted
+                         dark:text-dark-muted text-[0.73rem] uppercase tracking-widest px-7 py-3.5
+                         hover:border-teal hover:text-teal transition-colors duration-200 flex items-center gap-2"
+            >
+              Get In Touch
+            </a>
+          </div>
+
+          <div
+            className={`${fade("delay-700")} flex items-center gap-3 mt-16 text-[0.62rem] uppercase tracking-[0.18em] text-light-dim dark:text-dark-dim`}
+          >
+            <div className="relative w-10 h-px bg-light-dim dark:bg-dark-dim overflow-hidden scroll-anim" />
+            Scroll to explore
+          </div>
+        </div>
+
+        {/* RIGHT — profile photo + orbit rings */}
+        <div
+          className={`${fade("delay-300")} relative hidden lg:block flex-shrink-0`}
+          style={{ width: 520, height: 520 }}
+        >
+          {/* Decorative orbit ring lines */}
+          {[300, 410, 520].map((size, i) => (
+            <div
+              key={size}
+              className="absolute rounded-full border border-dashed pointer-events-none"
+              style={{
+                width: size,
+                height: size,
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                borderColor: `rgba(30,45,61,${0.55 - i * 0.12})`,
+              }}
+            />
+          ))}
+
+          {/* Profile photo — public/image.png */}
+          <div
+            className="absolute z-10 rounded-full overflow-hidden border-2 border-orange/70
+                       shadow-[0_0_50px_rgba(255,153,0,0.25),0_0_0_6px_rgba(255,153,0,0.08)]"
+            style={{
+              width: 250,
+              height: 250,
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            {/* SK fallback — hidden once image loads */}
+            <div className="absolute inset-0 bg-dark-card flex items-center justify-center">
+              <span className="font-syne font-extrabold text-4xl text-orange/70 select-none">
+                SK
+              </span>
+            </div>
+            <Image
+              src="/image.png"
+              alt="Sok Kimheng"
+              width={250}
+              height={250}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Ring 1 — radius 130px, 15s  */}
+          {ring1.map((t) => (
+            <div
+              key={t.name}
+              className="orbit-item"
+              style={{
+                animationName: "orbit-r1",
+                animationDuration: "15s",
+                animationDelay: t.delay,
+              }}
+            >
+              <TechBadge {...t} />
+            </div>
+          ))}
+
+          {/* Ring 2 — radius 185px, 22s */}
+          {ring2.map((t) => (
+            <div
+              key={t.name}
+              className="orbit-item"
+              style={{
+                animationName: "orbit-r2",
+                animationDuration: "22s",
+                animationDelay: t.delay,
+              }}
+            >
+              <TechBadge {...t} />
+            </div>
+          ))}
+
+          {/* Ring 3 — radius 240px, 30s */}
+          {ring3.map((t) => (
+            <div
+              key={t.name}
+              className="orbit-item"
+              style={{
+                animationName: "orbit-r3",
+                animationDuration: "30s",
+                animationDelay: t.delay,
+              }}
+            >
+              <TechBadge {...t} />
             </div>
           ))}
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <ChevronDown className="w-6 h-6 dark:text-slate-500 text-slate-400" />
+      {/* Years badge on tablet (orbit hidden) */}
+      <div className="absolute right-6 md:right-14 bottom-20 hidden sm:flex lg:hidden flex-col items-center gap-3">
+        <div className="relative w-24 h-24 flex flex-col items-center justify-center border border-light-border dark:border-dark-border rounded-full">
+          <div className="spin-ring absolute inset-[-6px] border border-orange/40 rounded-full" />
+          <span className="font-syne font-extrabold text-3xl text-orange leading-none">
+            3+
+          </span>
+          <span className="text-[0.55rem] uppercase tracking-widest text-light-muted dark:text-dark-muted text-center leading-tight">
+            Years
+            <br />
+            Exp.
+          </span>
+        </div>
       </div>
     </section>
   );

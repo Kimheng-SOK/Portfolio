@@ -1,21 +1,13 @@
 export default function Footer() {
-  const year = new Date().getFullYear();
   return (
-    <footer className="py-8 border-t dark:border-slate-800 border-slate-200 dark:bg-slate-950 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-3">
-        <div className="flex items-center gap-2">
-          <span className="font-bold text-base">
-            Sok<span className="text-[#FF9900]">Kimheng</span>
-          </span>
-          <span className="dark:text-slate-500 text-slate-400 text-sm">
-            © {year} All rights reserved.
-          </span>
-        </div>
-        <div className="dark:text-slate-500 text-slate-400 text-sm">
-          Designed &amp; Built with{" "}
-          <span className="text-[#FF9900]">♥</span> using Next.js, Tailwind &amp; AWS
-        </div>
-      </div>
+    <footer className="relative z-10 px-6 md:px-14 py-7 border-t border-light-border dark:border-dark-border flex flex-col sm:flex-row justify-between items-center gap-4">
+      <span className="text-[0.65rem] tracking-widest text-light-dim dark:text-dark-dim">
+        &copy; {new Date().getFullYear()} Sok Kimheng. All rights reserved.
+      </span>
+      <span className="flex items-center gap-2 text-[0.65rem] tracking-widest text-light-muted dark:text-dark-muted">
+        <span className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e] animate-pulse" />
+        Available for opportunities
+      </span>
     </footer>
   );
 }

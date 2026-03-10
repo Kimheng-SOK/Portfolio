@@ -1,154 +1,80 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { CloudCog, ShoppingCart, Bot, ExternalLink, Github, ArrowRight } from "lucide-react";
+import { useReveal } from "./useReveal";
 
 const projects = [
   {
-    title: "Serverless Analytics Platform",
-    desc: "Real-time data processing pipeline using Lambda, Kinesis, and S3. Processes 5TB of data daily with sub-second latency.",
-    tags: ["Lambda", "DynamoDB", "React", "Kinesis"],
-    icon: CloudCog,
-    gradient: "from-[#FF9900]/25 to-slate-800/50",
-    accent: "text-[#FF9900]",
-    badge: "AWS",
-    badgeColor: "text-[#FF9900]",
-    delay: 0,
+    num:      "01",
+    category: "Cloud Dashboard",
+    name:     "AWS Resource Monitor",
+    desc:     "Real-time dashboard for monitoring AWS resource utilization across multiple accounts. Built with React and WebSockets, pulling live metrics from CloudWatch APIs with sub-second update latency.",
+    stack:    "React · Lambda · CloudWatch",
+    href:     "#",
   },
   {
-    title: "E-Commerce Microservices",
-    desc: "Scalable e-commerce platform with microservices architecture. Features real-time inventory and payment processing.",
-    tags: ["Node.js", "Docker", "Kubernetes", "PostgreSQL"],
-    icon: ShoppingCart,
-    gradient: "from-[#0ea5e9]/25 to-slate-800/50",
-    accent: "text-[#0ea5e9]",
-    badge: "Full Stack",
-    badgeColor: "text-[#0ea5e9]",
-    delay: 100,
+    num:      "02",
+    category: "Serverless API",
+    name:     "Microservices Platform",
+    desc:     "Event-driven microservices architecture using AWS Lambda, SQS, and DynamoDB to handle 500k+ daily transactions with 99.99% uptime and near-zero cold-start latency.",
+    stack:    "Lambda · SQS · DynamoDB",
+    href:     "#",
   },
   {
-    title: "AI Task Manager",
-    desc: "Intelligent task management app with NLP capabilities. Uses AWS Comprehend for sentiment analysis and auto-tagging.",
-    tags: ["Python", "TensorFlow", "Vue.js", "AWS Comprehend"],
-    icon: Bot,
-    gradient: "from-purple-500/25 to-slate-800/50",
-    accent: "text-purple-400",
-    badge: "AI/ML",
-    badgeColor: "text-purple-400",
-    delay: 200,
+    num:      "03",
+    category: "SaaS Product",
+    name:     "E-Commerce Engine",
+    desc:     "Full-featured multi-vendor e-commerce platform with inventory management, real-time analytics, and payment processing. Supports 10k+ concurrent users with PostgreSQL and Redis caching.",
+    stack:    "Next.js · Node.js · PostgreSQL",
+    href:     "#",
+  },
+  {
+    num:      "04",
+    category: "DevOps Tool",
+    name:     "Infrastructure as Code CLI",
+    desc:     "Python CLI tool to auto-generate Terraform modules and CloudFormation stacks from architectural diagrams. Reduces infrastructure provisioning time by 70% for internal teams.",
+    stack:    "Python · Terraform · AWS CDK",
+    href:     "#",
   },
 ];
 
 export default function Projects() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => e.isIntersecting && e.target.classList.add("visible")),
-      { threshold: 0.1, rootMargin: "0px 0px -60px 0px" }
-    );
-    sectionRef.current
-      ?.querySelectorAll(".reveal")
-      .forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+  const ref = useReveal();
 
   return (
-    <section id="projects" ref={sectionRef} className="py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16 reveal">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-[#FF9900]/10 text-[#FF9900] mb-4">
-            Portfolio
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-3">
-            Featured <span className="text-[#FF9900]">Projects</span>
-          </h2>
-          <p className="dark:text-slate-400 text-slate-500">
-            Some of my recent work at AWS and personal projects
-          </p>
-        </div>
+    <section id="projects" ref={ref} className="relative z-10 px-6 md:px-14 py-24">
+      <p className="reveal section-tag">Selected Work</p>
+      <h2
+        className="reveal reveal-delay-1 font-syne font-extrabold text-slate-800 dark:text-slate-100 leading-tight mt-4 mb-14"
+        style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
+      >
+        Featured Projects
+      </h2>
 
-        {/* Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((p) => {
-            const Icon = p.icon;
-            return (
-              <div
-                key={p.title}
-                className="glass rounded-2xl overflow-hidden border dark:border-slate-700/60 border-slate-200 card-hover reveal group"
-                style={{ transitionDelay: `${p.delay}ms` }}
-              >
-                {/* Thumbnail */}
-                <div
-                  className={`h-44 bg-gradient-to-br ${p.gradient} relative overflow-hidden`}
-                >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Icon
-                      className={`w-16 h-16 ${p.accent} opacity-40 group-hover:opacity-70 group-hover:scale-110 transition-all duration-500`}
-                    />
-                  </div>
-                  {/* Grid texture */}
-                  <div className="absolute inset-0 bg-grid opacity-30" />
-                  <div className="absolute top-4 right-4">
-                    <span
-                      className={`px-2.5 py-1 rounded-full dark:bg-slate-900/80 bg-white/80 text-xs font-semibold border dark:border-slate-700 border-slate-200 ${p.badgeColor}`}
-                    >
-                      {p.badge}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-5">
-                  <h3
-                    className={`text-lg font-bold mb-2 group-hover:${p.accent} transition-colors`}
-                  >
-                    {p.title}
-                  </h3>
-                  <p className="dark:text-slate-400 text-slate-500 text-sm mb-4 leading-relaxed">
-                    {p.desc}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {p.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="px-2 py-0.5 rounded dark:bg-slate-800 bg-slate-100 text-xs dark:text-slate-300 text-slate-600"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex gap-4 pt-2 border-t dark:border-slate-700/50 border-slate-200">
-                    <a
-                      href="#"
-                      className={`text-sm font-medium ${p.accent} hover:underline flex items-center gap-1.5`}
-                    >
-                      Live Demo <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                    <a
-                      href="#"
-                      className="text-sm font-medium dark:text-slate-400 text-slate-500 hover:dark:text-white hover:text-slate-900 flex items-center gap-1.5 transition-colors"
-                    >
-                      Code <Github className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* View all */}
-        <div className="mt-12 text-center reveal">
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border dark:border-slate-700 border-slate-300 dark:hover:border-[#FF9900] hover:border-[#FF9900] hover:text-[#FF9900] transition-all text-sm font-medium"
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {projects.map((p, i) => (
+          <div
+            key={p.num}
+            className={`reveal reveal-delay-${i % 3} group bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border overflow-hidden hover:border-orange transition-all duration-300 hover:-translate-y-1`}
           >
-            View All Projects <ArrowRight className="w-4 h-4" />
-          </a>
-        </div>
+            <div className="relative p-8 border-b border-light-border dark:border-dark-border">
+              <span className="absolute top-4 right-6 font-syne font-extrabold text-5xl text-light-border dark:text-dark-border group-hover:text-orange/15 transition-colors duration-300 leading-none select-none">
+                {p.num}
+              </span>
+              <p className="text-[0.63rem] uppercase tracking-[0.15em] text-teal mb-3">{p.category}</p>
+              <h3 className="font-syne font-bold text-xl text-slate-800 dark:text-slate-100 mb-3">{p.name}</h3>
+              <p className="text-[0.78rem] leading-loose text-light-muted dark:text-dark-muted">{p.desc}</p>
+            </div>
+            <div className="px-8 py-5 flex items-center justify-between">
+              <span className="text-[0.63rem] tracking-wide text-light-dim dark:text-dark-dim">{p.stack}</span>
+              <a
+                href={p.href}
+                className="flex items-center gap-1.5 text-[0.68rem] uppercase tracking-widest text-orange hover:gap-3 transition-all duration-200"
+              >
+                View {"\u2192"}
+              </a>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
