@@ -1,0 +1,40 @@
+export const skillsData = {
+  languages: [
+    { name: "JavaScript", icon: "js", level: 90, color: "#f7df1e" },
+    { name: "TypeScript", icon: "ts", level: 80, color: "#3178c6" },
+    { name: "Java", icon: "java", level: 85, color: "#ed8b00" },
+    { name: "Python", icon: "python", level: 75, color: "#3776ab" },
+    { name: "PHP", icon: "php", level: 70, color: "#777bb4" },
+    { name: "HTML/CSS", icon: "html", level: 95, color: "#e34f26" },
+  ],
+  frontend: [
+    { name: "React", icon: "react", level: 90, color: "#61dafb" },
+    { name: "Vue.js", icon: "vue", level: 85, color: "#4fc08d" },
+    { name: "Flutter", icon: "flutter", level: 85, color: "#61dafb" },
+    { name: "Next.js", icon: "nextjs", level: 75, color: "#ffffff" },
+    { name: "Tailwind CSS", icon: "tailwind", level: 90, color: "#06b6d4" },
+    { name: "Framer Motion", icon: "framer", level: 80, color: "#ff0055" },
+    { name: "Bootstrap", icon: "bootstrap", level: 80, color: "#ff0055" },
+  ],
+  backend: [
+    { name: "Node.js", icon: "node", level: 85, color: "#339933" },
+    { name: "Express.js", icon: "express", level: 80, color: "#ffffff" },
+    { name: "Laravel", icon: "laravel", level: 75, color: "#ff2d20" },
+    { name: "Supabase", icon: "supabase", level: 85, color: "#3ecf8e" },
+    { name: "Firebase", icon: "firebase", level: 80, color: "#ffca28" },
+    { name: "Nest.js", icon: "nestjs", level: 80, color: "#ffca28" },
+  ],
+  database: [
+    { name: "PostgreSQL", icon: "postgresql", level: 80, color: "#336791" },
+    { name: "MongoDB", icon: "mongodb", level: 75, color: "#47a248" },
+    { name: "MySQL", icon: "mysql", level: 75, color: "#4479a1" },
+  ],
+  tools: [
+    { name: "Git", icon: "git", level: 90, color: "#f05032" },
+    { name: "Figma", icon: "figma", level: 85, color: "#f24e1e" },
+    { name: "VS Code", icon: "vscode", level: 95, color: "#007acc" },
+    { name: "Docker", icon: "docker", level: 65, color: "#2496ed" },
+    { name: "Postman", icon: "postman", level: 80, color: "#ff0055" },
+    { name: "Apidog", icon: "apidog", level: 80, color: "#ff0055" },
+  ],
+};
