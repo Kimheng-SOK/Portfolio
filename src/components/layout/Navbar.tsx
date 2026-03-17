@@ -128,7 +128,7 @@ const Navbar = () => {
             </div>
             <div className="logo-text">
               <div className="logo-name">{profileData.nickname}</div>
-              <div className="logo-title">Full Stack Dev</div>
+              <div className="logo-title">Gen Z Developer</div>
             </div>
           </a>
 

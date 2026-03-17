@@ -2,7 +2,7 @@ export const profileData = {
   name: "SOK KIMHENG",
   nickname: "Kimheng",
   initials: "SKH",
-  title: "Full Stack Developer",
+  title: "CS Year 4 Student",
   transparent_image: "images/profile-transparent.png",
   profile_image: "images/profile.png",
   roles: [
