@@ -3,6 +3,8 @@ export const profileData = {
   nickname: "Kimheng",
   initials: "SKH",
   title: "Full Stack Developer",
+  transparent_image: "images/profile-transparent.png",
+  profile_image: "images/profile.png",
   roles: [
     "Full Stack Developer",
     "UI/UX Designer",
