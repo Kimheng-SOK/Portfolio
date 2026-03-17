@@ -42,7 +42,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, scale: 0.8, filter: "blur(10px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              transition={{ duration: 1, ease: "easeOut" }}
+              transition={{ duration: 1 }}
               className="text-4xl md:text-6xl font-black tracking-tighter"
               style={{
                 fontFamily: "var(--font-display)",
@@ -57,7 +57,7 @@ export default function Home() {
             key="app"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.8 }}
           >
             <div className="bg-noise" />
             <AmbientBackground />

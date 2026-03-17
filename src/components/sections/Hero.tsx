@@ -6,17 +6,23 @@ import { Rocket, Mail, Github, Palette, Code, Server } from "lucide-react";
 import { profileData } from "../../data/portfolioData";
 
 // Counter component - defined outside Hero to maintain stable reference
-const Counter = ({ target, duration = 2000 }) => {
+const Counter = ({
+  target,
+  duration = 2000,
+}: {
+  target: number;
+  duration?: number;
+}) => {
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
     if (hasAnimated) return; // Don't re-animate once completed
 
-    let startTime;
-    let animationFrameId;
+    let startTime: number | undefined;
+    let animationFrameId: number;
 
-    const animate = (timestamp) => {
+    const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
       setCount(Math.floor(progress * target));
@@ -90,7 +96,7 @@ const Hero = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: { duration: 0.6 },
     },
   };
 

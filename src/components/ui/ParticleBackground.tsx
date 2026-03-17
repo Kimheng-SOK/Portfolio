@@ -1,68 +1,68 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 const ParticleBackground = () => {
-    const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const container = containerRef.current;
-        if (!container) return;
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
 
-        const particleCount = 60;
+    const particleCount = 60;
 
-        // Create particles with varying sizes and opacity
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
+    // Create particles with varying sizes and opacity
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement("div");
+      particle.className = "particle";
 
-            // Random position
-            particle.style.left = `${Math.random() * 100}%`;
-            particle.style.top = `${Math.random() * 100}%`;
+      // Random position
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
 
-            // Random animation timing
-            particle.style.animationDelay = `${Math.random() * 25}s`;
-            particle.style.animationDuration = `${20 + Math.random() * 20}s`;
+      // Random animation timing
+      particle.style.animationDelay = `${Math.random() * 25}s`;
+      particle.style.animationDuration = `${20 + Math.random() * 20}s`;
 
-            // Varying sizes for depth effect
-            const size = 1 + Math.random() * 4;
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
+      // Varying sizes for depth effect
+      const size = 1 + Math.random() * 4;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
 
-            // Pure white/gray particles - monochrome theme
-            const opacity = 0.03 + Math.random() * 0.12;
-            particle.style.background = `rgba(255, 255, 255, ${opacity})`;
+      // Pure white/gray particles - monochrome theme
+      const opacity = 0.03 + Math.random() * 0.12;
+      particle.style.background = `rgba(255, 255, 255, ${opacity})`;
 
-            // Add subtle glow to some particles
-            if (Math.random() > 0.7) {
-                particle.style.boxShadow = `0 0 ${size * 2}px rgba(255, 255, 255, ${opacity * 0.5})`;
-            }
+      // Add subtle glow to some particles
+      if (Math.random() > 0.7) {
+        particle.style.boxShadow = `0 0 ${size * 2}px rgba(255, 255, 255, ${opacity * 0.5})`;
+      }
 
-            container.appendChild(particle);
-        }
+      container.appendChild(particle);
+    }
 
-        // Create floating orbs (larger soft glows)
-        for (let i = 0; i < 5; i++) {
-            const orb = document.createElement('div');
-            orb.className = 'floating-orb';
-            orb.style.left = `${Math.random() * 100}%`;
-            orb.style.top = `${Math.random() * 100}%`;
-            orb.style.animationDelay = `${Math.random() * 15}s`;
-            container.appendChild(orb);
-        }
+    // Create floating orbs (larger soft glows)
+    for (let i = 0; i < 5; i++) {
+      const orb = document.createElement("div");
+      orb.className = "floating-orb";
+      orb.style.left = `${Math.random() * 100}%`;
+      orb.style.top = `${Math.random() * 100}%`;
+      orb.style.animationDelay = `${Math.random() * 15}s`;
+      container.appendChild(orb);
+    }
 
-        // Cleanup
-        return () => {
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
-        };
-    }, []);
+    // Cleanup
+    return () => {
+      while (container.firstChild) {
+        container.removeChild(container.firstChild);
+      }
+    };
+  }, []);
 
-    return (
-        <>
-            <div ref={containerRef} className="particles-container" />
-            <style>{`
+  return (
+    <>
+      <div ref={containerRef} className="particles-container" />
+      <style>{`
                 .particles-container {
                     position: fixed;
                     inset: 0;
@@ -122,8 +122,8 @@ const ParticleBackground = () => {
                     }
                 }
             `}</style>
-        </>
-    );
+    </>
+  );
 };
 
 export default ParticleBackground;
