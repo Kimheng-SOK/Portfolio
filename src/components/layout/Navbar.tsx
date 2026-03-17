@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Home,
@@ -34,6 +35,7 @@ const Navbar = () => {
   const cvDropdownRef = useRef(null);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -95,9 +97,14 @@ const Navbar = () => {
   };
 
   const handleCVSelect = (cvType: "TECHNICAL" | "GENERAL") => {
-    // openCVInNewTab(cvType);
     setIsCVDropdownOpen(false);
     setIsMobileMenuOpen(false);
+    if (cvType === "TECHNICAL") {
+      router.push("/resume");
+    } else {
+      //   router.push("/resume/general");
+      router.push("/not-found");
+    }
   };
 
   return (
